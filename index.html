@@ -1,0 +1,3076 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cisco Network Security 1.0: Complete Lab Command Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="icon" type="image/png" href="Images/image.png">
+    <link rel="stylesheet" href="styles.css">
+  <base target="_blank">
+</head>
+
+  <body class="font-inter">
+    <!-- Toggle button for mobile -->
+    <button id="toc-toggle" class="fixed top-4 left-4 z-50 bg-white p-2 rounded-lg shadow-lg lg:hidden">
+      <i class="fas fa-bars text-teal-700"></i>
+    </button>
+  <div class="layout">
+    <!-- Fixed Table of Contents - Hidden on mobile by default -->
+    <nav id="toc-nav" class="toc-fixed rounded-xl shadow-xl lg:block hidden">
+      <div class="p-6">
+        <h3 class="font-crimson text-lg font-semibold text-gray-800 mb-4">Contents</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a href="#executive-summary" class="citation-link">Executive Summary</a>
+          </li>
+          <li>
+            <a href="#secure-passwords-ssh" class="citation-link">Lab 4.4.8: Secure Passwords & SSH</a>
+          </li>
+          <li>
+            <a href="#ospf-authentication" class="citation-link">Lab 6.3.7: OSPF Authentication</a>
+          </li>
+          <li>
+            <a href="#ntp-configuration" class="citation-link">Lab 6.6.4: NTP Configuration</a>
+          </li>
+          <li>
+            <a href="#syslog-ntp-ssh" class="citation-link">Lab 6.7.12: Syslog, NTP & SSH</a>
+          </li>
+          <li>
+            <a href="#local-aaa" class="citation-link">Lab 7.2.6: Local AAA</a>
+          </li>
+          <li>
+            <a href="#server-aaa" class="citation-link">Lab 7.4.9: Server-based AAA</a>
+          </li>
+          <li>
+            <a href="#named-acls" class="citation-link">Lab 8.5.5: Named IPv4 ACLs</a>
+          </li>
+          <li>
+            <a href="#numbered-acls" class="citation-link">Lab 8.5.6: Numbered IPv4 ACLs</a>
+          </li>
+          <li>
+            <a href="#extended-acls-scenario1" class="citation-link">Lab 8.5.12: Extended ACLs - Scenario 1</a>
+          </li>
+          <li>
+            <a href="#extended-acls-scenario2" class="citation-link">Lab 8.5.13: Extended ACLs - Scenario 2</a>
+          </li>
+          <li>
+            <a href="#attack-mitigation" class="citation-link">Lab 8.6.5: Attack Mitigation ACLs</a>
+          </li>
+          <li>
+            <a href="#ipv6-acls" class="citation-link">Lab 8.7.4: IPv6 ACLs</a>
+          </li>
+          <li>
+            <a href="#packet-flow" class="citation-link">Lab 9.2.4: Packet Flow Analysis</a>
+          </li>
+          <li>
+            <a href="#zone-based-firewall" class="citation-link">Lab 10.3.11: Zone-Based Firewall</a>
+          </li>
+          <li>
+            <a href="#span" class="citation-link">Lab 11.4.6: Local SPAN</a>
+          </li>
+          <li>
+            <a href="#port-security" class="citation-link">Lab 14.3.11: Port Security</a>
+          </li>
+          <li>
+            <a href="#stp-loop" class="citation-link">Lab 14.8.10: STP Loop Prevention</a>
+          </li>
+          <li>
+            <a href="#stp-security" class="citation-link">Lab 14.9.10: STP Security</a>
+          </li>
+          <li>
+            <a href="#vlan-security" class="citation-link">Lab 14.9.11: Layer 2 VLAN Security</a>
+          </li>
+          <li>
+            <a href="#ipsec-vpn" class="citation-link">Lab 19.5.5: Site-to-Site IPsec VPN</a>
+          </li>
+          <li>
+            <a href="#asa-firewall" class="citation-link">Lab 21.7.5: ASA Firewall Configuration</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content-offset">
+      <!-- Hero Section -->
+      <section class="hero-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+        <div class="relative z-10 container mx-auto px-4 md:px-8 py-16">
+          <div class="grid-bento">
+            <!-- Main Hero Content -->
+            <div class="hero-main">
+              <h1 class="font-crimson text-5xl lg:text-7xl font-bold leading-tight mb-6">
+                <em>Cisco Network Security 1.0</em>
+              </h1>
+              <p class="text-xl lg:text-2xl font-light mb-8 opacity-90">
+                Complete Lab Command Reference & Configuration Guide
+              </p>
+              <div class="flex items-center space-x-4 text-sm opacity-80">
+                <span><i class="fas fa-network-wired mr-2"></i>Network Security</span>
+                <span><i class="fas fa-shield-alt mr-2"></i>Cisco IOS</span>
+                <span><i class="fas fa-terminal mr-2"></i>CLI Commands</span>
+              </div>
+            </div>
+
+            <!-- Side Elements -->
+            <div class="hero-side-1 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+              <h3 class="font-crimson text-xl font-semibold mb-4">Key Focus Areas</h3>
+              <ul class="space-y-2 text-sm">
+                <li><i class="fas fa-key mr-2 text-yellow-300"></i>Secure Access Control</li>
+                <li><i class="fas fa-clock mr-2 text-blue-300"></i>Time Synchronization</li>
+                <li><i class="fas fa-list-alt mr-2 text-green-300"></i>Traffic Filtering</li>
+                <li><i class="fas fa-vpn mr-2 text-purple-300"></i>VPN Configuration</li>
+              </ul>
+            </div>
+
+            <div class="hero-side-2 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6">
+              <h3 class="font-crimson text-xl font-semibold mb-4">Lab Coverage</h3>
+              <div class="text-3xl font-bold">22</div>
+              <div class="text-sm opacity-80">Essential Security Labs</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Executive Summary -->
+      <section id="executive-summary" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-4xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Executive Summary</h2>
+          <div class="prose prose-lg max-w-none">
+            <p class="text-xl text-gray-600 leading-relaxed mb-6">
+              This comprehensive command reference provides network security professionals with essential Cisco IOS configurations for implementing robust security measures across enterprise network infrastructures. Derived from the <a href="https://itexamanswers.net/network-security-exam-answers-version-1-0-full-labs.html" class="citation-link" target="_blank">Cisco Networking Academy's Network Security 1.0 course labs</a>, this guide covers 22 critical security configurations spanning access control, authentication, encryption, and network monitoring.
+            </p>
+
+            <div class="bg-gray-50 p-6 rounded-xl my-8">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-gray-800">Key Security Domains Covered</h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 class="font-semibold text-teal-700 mb-2">Access Control & Authentication</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Local AAA configuration with TACACS+ and RADIUS</li>
+                    <li>• Secure password policies and SSH implementation</li>
+                    <li>• OSPF MD5 authentication for routing security</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-teal-700 mb-2">Network Protection</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Standard and extended IPv4/IPv6 ACLs</li>
+                    <li>• Zone-based policy firewall configuration</li>
+                    <li>• Attack mitigation using ACLs</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-teal-700 mb-2">Monitoring & Management</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• NTP configuration with authentication</li>
+                    <li>• Centralized Syslog server integration</li>
+                    <li>• Local SPAN implementation</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-teal-700 mb-2">Layer 2 Security</h4>
+                  <ul class="text-sm text-gray-600 space-y-1">
+                    <li>• Port security with MAC filtering</li>
+                    <li>• STP loop prevention and security</li>
+                    <li>• VLAN security hardening</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 4.4.8: Secure Passwords and SSH -->
+      <section id="secure-passwords-ssh" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 4.4.8: Configure Secure Passwords and SSH</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on implementing fundamental security measures including secure password policies, password encryption, and SSH configuration for encrypted remote management access. The configuration is divided between router RTA and switch SW1, with emphasis on replacing insecure Telnet with SSH.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Router Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>Router RTA Configuration
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Basic Setup & Interface Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>hostname RTA
+interface GigabitEthernet0/0/0
+ ip address 172.16.1.1 255.255.255.0
+ no shutdown</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Sets device hostname and configures IP addressing on interface</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Password Security Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>service password-encryption
+security passwords min-length 10
+enable secret [secure_password]
+no ip domain-lookup
+ip domain-name netsec.com</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables password encryption, minimum length requirement, and disables DNS lookup</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">SSH Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>username [username] secret [password]
+crypto key generate rsa
+! Specify 1024 bits when prompted
+line vty 0 4
+ transport input ssh
+ login local
+ exec-timeout 6
+copy running-config startup-config</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates user account, generates RSA keys, and configures VTY lines for SSH-only access</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Switch Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>Switch SW1 Configuration
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Basic Setup & VLAN Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>hostname SW1
+interface vlan 1
+ ip address 172.16.1.2 255.255.255.0
+ no shutdown</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures switch hostname and management interface</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Password Security</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>service password-encryption
+security passwords min-length 10
+enable secret [secure_password]
+ip domain-name netsec.com</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Same security policies as router configuration</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">SSH Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>username [username] secret [password]
+crypto key generate rsa
+! Specify 1024 bits when prompted
+line vty 0 15
+ transport input ssh
+ login local
+ exec-timeout 6 0
+copy running-config startup-config</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Switch supports more VTY lines (0-15) compared to router</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-lightbulb mr-2"></i>Key Security Principles
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Password Security</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Minimum 10-character password policy</li>
+                  <li>• Encrypted password storage</li>
+                  <li>• Strong enable secret protection</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">SSH Implementation</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• RSA key-based encryption</li>
+                  <li>• Telnet disabled (transport input ssh)</li>
+                  <li>• Session timeout for idle connections</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 6.3.7: OSPF Authentication -->
+      <section id="ospf-authentication" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 6.3.7: Configure OSPF Authentication</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab implements OSPF MD5 authentication to secure routing updates between routers. The configuration ensures only authenticated routers can exchange routing information, preventing unauthorized route injection and enhancing network security.
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl mb-8">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-gray-800">Network Topology</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                R1["Router R1
+                <br />G0/0/0"] -->|"Area 0"| R2["Router R2
+                <br />G0/0/0"]
+                R2["Router R2
+                <br />G0/0/1"] -->|"Area 0"| R3["Router R3
+                <br />G0/0/1"]
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-6">
+            <!-- Router R1 -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>Router R1 Configuration
+              </h3>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <pre class="text-sm overflow-x-auto"><code>conf t
+interface g0/0/0
+ ip ospf message-digest-key 1 md5 MD5pa55
+router ospf 1
+ area 0 authentication message-digest
+end</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Configures MD5 authentication key on interface and enables message-digest authentication for OSPF area 0</p>
+              </div>
+            </div>
+
+            <!-- Router R2 -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>Router R2 Configuration
+              </h3>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <pre class="text-sm overflow-x-auto"><code>conf t
+interface g0/0/0
+ ip ospf message-digest-key 1 md5 MD5pa55
+interface g0/0/1
+ ip ospf message-digest-key 1 md5 MD5pa55
+router ospf 1
+ area 0 authentication message-digest
+end</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Same configuration applied to both interfaces since R2 connects to both R1 and R3</p>
+              </div>
+            </div>
+
+            <!-- Router R3 -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>Router R3 Configuration
+              </h3>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <pre class="text-sm overflow-x-auto"><code>conf t
+interface g0/0/1
+ ip ospf message-digest-key 1 md5 MD5pa55
+router ospf 1
+ area 0 authentication message-digest
+end</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Single interface configuration as R3 only connects to R2</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-yellow-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-yellow-800">
+              <i class="fas fa-exclamation-triangle mr-2"></i>OSPF Authentication Key Points
+            </h3>
+            <div class="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Configuration Requirements</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Key ID must match on all routers (1 in this case)</li>
+                  <li>• Password must be identical across all devices</li>
+                  <li>• Applied per-interface in OSPF area</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Security Benefits</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Prevents unauthorized route injection</li>
+                  <li>• MD5 hashing prevents password transmission</li>
+                  <li>• Maintains routing protocol integrity</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 6.6.4: NTP Configuration -->
+      <section id="ntp-configuration" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 6.6.4: Configure and Verify NTP</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab configures Network Time Protocol (NTP) with authentication to ensure accurate time synchronization across network devices. Accurate timekeeping is critical for security logging, certificate validation, and event correlation.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- NTP Client Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-clock mr-2"></i>NTP Client Configuration
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NTP Server Specification</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ntp server 209.165.200.225</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Specifies the IP address of the NTP server to synchronize with</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NTP Authentication Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ntp authentication-key 1 md5 NTPpa55
+ntp trusted-key 1</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates MD5 authentication key and designates it as trusted</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Hardware Clock Synchronization</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ntp update-calendar</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Updates hardware clock (calendar) with NTP time</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- NTP Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>NTP Verification Commands
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Check Clock Synchronization</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show clock detail</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays current time and time source (should show "NTP" when synchronized)</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NTP Status Verification</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ntp status</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows synchronization status, stratum level, and reference clock</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-indigo-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NTP Associations</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ntp associations</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Lists all NTP servers and synchronization status</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-info-circle mr-2"></i>NTP Security Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Authentication</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Always use MD5 authentication</li>
+                  <li>• Configure trusted keys only</li>
+                  <li>• Use strong shared secrets</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Time Synchronization</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Synchronize hardware clocks</li>
+                  <li>• Use multiple NTP servers</li>
+                  <li>• Monitor synchronization status</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 6.7.12: Syslog, NTP, and SSH Operations -->
+      <section id="syslog-ntp-ssh" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 6.7.12: Configure Cisco Devices for Syslog, NTP, and SSH Operations</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This comprehensive lab integrates multiple security and management features including OSPF MD5 authentication, NTP with authentication, Syslog for centralized logging, and SSH configuration. The setup is applied across three routers (R1, R2, R3) to create a secure, synchronized network environment.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- OSPF MD5 Authentication -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>OSPF MD5 Authentication Setup
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Enable OSPF Authentication</h4>
+                  <pre class="text-sm overflow-x-auto"><code>router ospf 1
+ area 0 authentication message-digest</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables MD5 authentication for all interfaces in OSPF area 0</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Configure MD5 Key on Interfaces</h4>
+                  <pre class="text-sm overflow-x-auto"><code>interface [interface_id]
+ ip ospf message-digest-key 1 md5 MD5pa55</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies shared secret key to all OSPF participating interfaces</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- NTP and Timestamp Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-clock mr-2"></i>NTP and Timestamp Configuration
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">NTP Authentication</h4>
+                  <pre class="text-sm overflow-x-auto"><code>ntp authentication-key 1 md5 NTPpa55
+ntp authenticate
+ntp trusted-key 1
+ntp server 192.168.1.5 key 1</code></pre>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Hardware Clock</h4>
+                  <pre class="text-sm overflow-x-auto"><code>ntp update-calendar</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Synchronizes hardware clock with NTP</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Log Timestamps</h4>
+                  <pre class="text-sm overflow-x-auto"><code>service timestamps log datetime msec</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Adds millisecond precision to log messages</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Syslog Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-file-alt mr-2"></i>Syslog Configuration
+              </h3>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Centralized Logging Setup</h4>
+                <pre class="text-sm overflow-x-auto"><code>logging 192.168.1.6</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Configures routers to send log messages to centralized Syslog server at 192.168.1.6</p>
+              </div>
+            </div>
+
+            <!-- SSH Configuration on R3 -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-terminal mr-2"></i>SSH Configuration on Router R3
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">SSH Version and Timeout</h4>
+                  <pre class="text-sm overflow-x-auto"><code>ip ssh version 2
+ip ssh authentication-retries 2
+ip ssh time-out 90</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enforces SSHv2 and sets security parameters</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">User and Domain Configuration</h4>
+                  <pre class="text-sm overflow-x-auto"><code>ip domain-name ccnasecurity.com
+username SSHadmin privilege 15 secret ciscosshpa55
+crypto key generate rsa general-keys modulus 1024</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates administrative user with full privileges</p>
+                </div>
+              </div>
+              <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">VTY Line Configuration</h4>
+                <pre class="text-sm overflow-x-auto"><code>line vty 0 4
+ login local
+ transport input ssh</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies local authentication and restricts to SSH only</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-green-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-green-800">
+              <i class="fas fa-shield-alt mr-2"></i>Integrated Security Benefits
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Authentication</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• OSPF routing security</li>
+                  <li>• NTP time integrity</li>
+                  <li>• SSH encrypted access</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Monitoring</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Centralized logging</li>
+                  <li>• Precise timestamps</li>
+                  <li>• Consistent time source</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Management</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Secure remote access</li>
+                  <li>• Synchronized operations</li>
+                  <li>• Scalable security</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 7.2.6: Local AAA -->
+      <section id="local-aaa" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 7.2.6: Configure Local AAA for Console and VTY Access</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab implements local Authentication, Authorization, and Accounting (AAA) services to replace basic password authentication with a more secure username/password-based system for both console and remote access.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Local User and AAA Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-user-shield mr-2"></i>Local User and AAA Configuration
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Create Local User</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>username Admin1 secret admin1pa55</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates user with encrypted password</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Enable AAA</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa new-model</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Activates AAA framework on router</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Default Authentication</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa authentication login default local</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Uses local database for all login attempts</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Console Line Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-terminal mr-2"></i>Console Line Configuration
+              </h3>
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Apply AAA to Console</h4>
+                <pre class="text-sm overflow-x-auto"><code>line console 0
+ login authentication default</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies default AAA authentication method to console access</p>
+              </div>
+            </div>
+
+            <!-- SSH Configuration for VTY Lines -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>SSH Configuration for VTY Lines
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Domain and RSA Keys</h4>
+                  <pre class="text-sm overflow-x-auto"><code>ip domain-name netsec.com
+crypto key generate rsa general-keys modulus 1024</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Prerequisites for SSH operation</p>
+                </div>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                  <h4 class="font-semibold text-gray-800 mb-2">Named Authentication Method</h4>
+                  <pre class="text-sm overflow-x-auto"><code>aaa authentication login SSH-LOGIN local</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates named authentication method list</p>
+                </div>
+              </div>
+              <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">VTY Line Configuration</h4>
+                <pre class="text-sm overflow-x-auto"><code>line vty 0 4
+ login authentication SSH-LOGIN
+ transport input ssh</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies named authentication and restricts to SSH only</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-orange-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-orange-800">
+              <i class="fas fa-key mr-2"></i>AAA Security Advantages
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-orange-700 mb-2">Authentication</h4>
+                <ul class="space-y-1 text-orange-600">
+                  <li>• Username/password validation</li>
+                  <li>• Local database storage</li>
+                  <li>• Granular access control</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-orange-700 mb-2">Authorization</h4>
+                <ul class="space-y-1 text-orange-600">
+                  <li>• Command authorization</li>
+                  <li>• Privilege levels</li>
+                  <li>• Role-based access</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-orange-700 mb-2">Accounting</h4>
+                <ul class="space-y-1 text-orange-600">
+                  <li>• User activity logging</li>
+                  <li>• Session monitoring</li>
+                  <li>• Audit trail creation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 7.4.9: Server-based AAA -->
+      <section id="server-aaa" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 7.4.9: Configure Server-based Authentication with TACACS+ and RADIUS</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab implements centralized authentication using external AAA servers with TACACS+ (on R2) and RADIUS (on R3) protocols. Server-based AAA provides scalable authentication for large networks with centralized user management.
+            </p>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- TACACS+ Configuration (R2) -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>TACACS+ Configuration (Router R2)
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Enable AAA and Configure Server</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa new-model
+tacacs-server host 10.1.1.100 key Network@123</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Activates AAA and specifies TACACS+ server with shared secret</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Authentication Method List</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa authentication login default group tacacs+ local</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Uses TACACS+ first, falls back to local database if server unavailable</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply to VTY Lines</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>line vty 0 4
+ login authentication default</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies TACACS+ authentication to remote access lines</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- RADIUS Configuration (R3) -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-4 text-teal-700">
+                <i class="fas fa-server mr-2"></i>RADIUS Configuration (Router R3)
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Enable AAA and Configure Server</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa new-model
+radius-server host 10.1.1.101 key Radius@123</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Activates AAA and specifies RADIUS server with shared secret</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Authentication Method List</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa authentication login default group radius local</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Uses RADIUS first, falls back to local database if server unavailable</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply to VTY Lines</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>line vty 0 4
+ login authentication default</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies RADIUS authentication to remote access lines</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-balance-scale mr-2"></i>TACACS+ vs RADIUS Comparison
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">TACACS+ (Router R2)</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Cisco proprietary protocol</li>
+                  <li>• Encrypts entire packet</li>
+                  <li>• Separates authentication, authorization, accounting</li>
+                  <li>• TCP port 49</li>
+                  <li>• Better for device administration</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">RADIUS (Router R3)</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Open standard protocol</li>
+                  <li>• Encrypts only password</li>
+                  <li>• Combines authentication and authorization</li>
+                  <li>• UDP ports 1812, 1813</li>
+                  <li>• Better for network access</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.5.5: Named Standard IPv4 ACLs -->
+      <section id="named-acls" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.5.5: Configure Named Standard IPv4 ACLs</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on configuring named standard IPv4 ACLs, which provide more flexibility and manageability than numbered ACLs. Named ACLs allow descriptive names and individual entry editing, making them ideal for production environments.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Router R2 Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-filter mr-2"></i>Router R2 Configuration
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Deny Specific Network</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip access-list standard BLOCK_192.168.11.0
+ deny 192.168.11.0 0.0.0.255</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates named ACL and denies traffic from 192.168.11.0/24 network</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit All Other Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>permit any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Explicit permit statement to allow all other traffic</p>
+                </div>
+              </div>
+              <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Apply ACL to Interface</h4>
+                <pre class="text-sm overflow-x-auto"><code>interface GigabitEthernet0/0
+ ip access-group BLOCK_192.168.11.0 out</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies ACL to interface in outbound direction</p>
+              </div>
+            </div>
+
+            <!-- Router R3 Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-filter mr-2"></i>Router R3 Configuration
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Deny Specific Network</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip access-list standard BLOCK_192.168.10.0
+ deny 192.168.10.0 0.0.0.255</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates named ACL and denies traffic from 192.168.10.0/24 network</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit All Other Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>permit any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Explicit permit statement to allow all other traffic</p>
+                </div>
+              </div>
+              <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Apply ACL to Interface</h4>
+                <pre class="text-sm overflow-x-auto"><code>interface GigabitEthernet0/0
+ ip access-group BLOCK_192.168.10.0 out</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies ACL to interface in outbound direction</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-yellow-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-yellow-800">
+              <i class="fas fa-edit mr-2"></i>Named ACL Advantages
+            </h3>
+            <div class="grid md:grid-cols-3 gap-4 text-sm">
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Manageability</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Descriptive names</li>
+                  <li>• Easy identification</li>
+                  <li>• Better documentation</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Flexibility</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Edit individual entries</li>
+                  <li>• No need to recreate entire ACL</li>
+                  <li>• Insert/delete specific lines</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Scalability</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• No numeric limitations</li>
+                  <li>• Better for large networks</li>
+                  <li>• Easier troubleshooting</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.5.6: Numbered Standard IPv4 ACLs -->
+      <section id="numbered-acls" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.5.6: Configure Numbered Standard IPv4 ACLs</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the configuration of numbered standard IPv4 ACLs, the traditional method for implementing access control on Cisco devices. While less flexible than named ACLs, numbered ACLs remain important for understanding fundamental access control concepts.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Router R2 Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-list-ol mr-2"></i>Router R2 Configuration
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Deny Network</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 1 deny 192.168.11.0 0.0.0.255</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">ACL 1 denies traffic from 192.168.11.0/24 network</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit All</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 1 permit any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows all other traffic not explicitly denied</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface GigabitEthernet0/0
+ ip access-group 1 out</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies ACL 1 to interface in outbound direction</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Router R3 Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-list-ol mr-2"></i>Router R3 Configuration
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Deny Network</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 1 deny 192.168.10.0 0.0.0.255</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">ACL 1 denies traffic from 192.168.10.0/24 network</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit All</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 1 permit any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows all other traffic not explicitly denied</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface GigabitEthernet0/0
+ ip access-group 1 out</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies ACL 1 to interface in outbound direction</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-red-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-red-800">
+              <i class="fas fa-exclamation-circle mr-2"></i>Numbered ACL Limitations
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-red-700 mb-2">Configuration Constraints</h4>
+                <ul class="space-y-1 text-red-600">
+                  <li>• Limited to numbers 1-99, 1300-1999</li>
+                  <li>• Cannot edit individual entries</li>
+                  <li>• Must delete and recreate entire ACL to modify</li>
+                  <li>• No descriptive names for identification</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-red-700 mb-2">Operational Considerations</h4>
+                <ul class="space-y-1 text-red-600">
+                  <li>• Less readable in large configurations</li>
+                  <li>• Harder to troubleshoot</li>
+                  <li>• Limited documentation value</li>
+                  <li>• Being phased out in modern networks</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.5.12: Extended ACLs - Scenario 1 -->
+      <section id="extended-acls-scenario1" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.5.12: Configure Extended ACLs - Scenario 1</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab demonstrates the configuration of both numbered and named extended ACLs for granular traffic filtering. The scenario involves controlling access from two employee PCs (PC1 and PC2) to a central server with specific service restrictions.
+            </p>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl mb-8">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-gray-800">Scenario Requirements</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-2">PC1 Access Requirements</h4>
+                <ul class="text-sm text-blue-600 space-y-1">
+                  <li>• FTP access to server (TCP port 21)</li>
+                  <li>• ICMP access for connectivity testing</li>
+                  <li>• No communication with PC2</li>
+                </ul>
+              </div>
+              <div class="bg-green-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-green-700 mb-2">PC2 Access Requirements</h4>
+                <ul class="text-sm text-green-600 space-y-1">
+                  <li>• HTTP access to server (TCP port 80)</li>
+                  <li>• ICMP access for connectivity testing</li>
+                  <li>• No communication with PC1</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Numbered Extended ACL Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-list-ol mr-2"></i>Numbered Extended ACL Configuration (PC1)
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit FTP Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 100 permit tcp 172.22.34.64 0.0.0.31 host 172.22.34.62 eq ftp</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows FTP (port 21) from PC1's network to server</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit ICMP Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 100 permit icmp 172.22.34.64 0.0.0.31 host 172.22.34.62</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows ICMP (ping) from PC1's network to server</p>
+                </div>
+              </div>
+              <div class="mt-4 bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-2">Apply ACL to Interface</h4>
+                <pre class="text-sm overflow-x-auto"><code>interface gigabitEthernet 0/0
+ ip access-group 100 in</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Applies ACL inbound on interface connected to PC1's network</p>
+              </div>
+            </div>
+
+            <!-- Named Extended ACL Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-tags mr-2"></i>Named Extended ACL Configuration (PC2)
+              </h3>
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Create Named ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip access-list extended HTTP_ONLY</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enters named ACL configuration mode</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit HTTP Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>permit tcp 172.22.34.96 0.0.0.15 host 172.22.34.62 eq www</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows HTTP (port 80) from PC2's network to server</p>
+                </div>
+              </div>
+              <div class="grid md:grid-cols-2 gap-6 mt-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Permit ICMP Traffic</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>permit icmp 172.22.34.96 0.0.0.15 host 172.22.34.62</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows ICMP (ping) from PC2's network to server</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply Named ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface gigabitEthernet 0/1
+ ip access-group HTTP_ONLY in</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies ACL inbound on interface connected to PC2's network</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-purple-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-purple-800">
+              <i class="fas fa-shield-alt mr-2"></i>Extended ACL Security Features
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-purple-700 mb-2">Granular Control</h4>
+                <ul class="space-y-1 text-purple-600">
+                  <li>• Source and destination IP</li>
+                  <li>• Protocol types (TCP, UDP, ICMP)</li>
+                  <li>• Port numbers (FTP, HTTP, etc.)</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-purple-700 mb-2">Placement Strategy</h4>
+                <ul class="space-y-1 text-purple-600">
+                  <li>• Close to source (extended ACLs)</li>
+                  <li>• Inbound filtering preferred</li>
+                  <li>• Conserves router resources</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-purple-700 mb-2">Application Benefits</h4>
+                <ul class="space-y-1 text-purple-600">
+                  <li>• Service-specific restrictions</li>
+                  <li>• Host-to-host control</li>
+                  <li>• Network segmentation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.5.13: Extended ACLs - Scenario 2 -->
+      <section id="extended-acls-scenario2" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.5.13: Configure Extended ACLs - Scenario 2</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This advanced lab presents a complex security scenario requiring granular control over multiple hosts and services. A single named extended ACL is configured on router RT1 to implement specific access restrictions for three PCs accessing two internet servers.
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl mb-8">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-gray-800">Security Policy Requirements</h3>
+            <div class="grid md:grid-cols-3 gap-4">
+              <div class="bg-red-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-red-700 mb-2">PC1 Restrictions</h4>
+                <ul class="text-sm text-red-600 space-y-1">
+                  <li>• Block HTTP (port 80)</li>
+                  <li>• Block HTTPS (port 443)</li>
+                  <li>• Both Server1 and Server2</li>
+                </ul>
+              </div>
+              <div class="bg-orange-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-orange-700 mb-2">PC2 Restrictions</h4>
+                <ul class="text-sm text-orange-600 space-y-1">
+                  <li>• Block FTP (port 21)</li>
+                  <li>• Both Server1 and Server2</li>
+                </ul>
+              </div>
+              <div class="bg-blue-50 p-4 rounded-lg">
+                <h4 class="font-semibold text-blue-700 mb-2">PC3 Restrictions</h4>
+                <ul class="text-sm text-blue-600 space-y-1">
+                  <li>• Block ICMP (ping)</li>
+                  <li>• Both Server1 and Server2</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="command-card p-6 rounded-xl">
+            <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+              <i class="fas fa-list-alt mr-2"></i>Named Extended ACL Configuration
+            </h3>
+
+            <div class="space-y-6">
+              <!-- PC1 Restrictions -->
+              <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                <h4 class="font-semibold text-gray-800 mb-3">Deny PC1 HTTP/HTTPS Access (4 rules)</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny tcp host 172.31.1.101 host 64.101.255.254 eq www
+deny tcp host 172.31.1.101 host 64.101.255.254 eq 443</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks HTTP and HTTPS to Server1</p>
+                  </div>
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny tcp host 172.31.1.101 host 64.103.255.254 eq www
+deny tcp host 172.31.1.101 host 64.103.255.254 eq 443</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks HTTP and HTTPS to Server2</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PC2 Restrictions -->
+              <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                <h4 class="font-semibold text-gray-800 mb-3">Deny PC2 FTP Access (2 rules)</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny tcp host 172.31.1.102 host 64.101.255.254 eq ftp</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks FTP to Server1</p>
+                  </div>
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny tcp host 172.31.1.102 host 64.103.255.254 eq ftp</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks FTP to Server2</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PC3 Restrictions -->
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 class="font-semibold text-gray-800 mb-3">Deny PC3 ICMP Access (2 rules)</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny icmp host 172.31.1.103 host 64.101.255.254</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks ICMP to Server1</p>
+                  </div>
+                  <div>
+                    <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>deny icmp host 172.31.1.103 host 64.103.255.254</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Blocks ICMP to Server2</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Permit All Other Traffic -->
+              <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Permit All Other IP Traffic</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>permit ip any any</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Allows all traffic not explicitly denied by previous rules</p>
+              </div>
+
+              <!-- Apply and Verify ACL -->
+              <div class="bg-gray-100 p-4 rounded-lg">
+                <h4 class="font-semibold text-gray-800 mb-3">Apply and Verify ACL</h4>
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <pre class="bg-white p-3 rounded text-sm overflow-x-auto"><code>interface g0/0
+ ip access-group ACL in</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Applies ACL inbound on LAN interface</p>
+                  </div>
+                  <div>
+                    <pre class="bg-white p-3 rounded text-sm overflow-x-auto"><code>show access-lists</code></pre>
+                    <p class="text-sm text-gray-600 mt-1">Verifies ACL operation and hit counts</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-teal-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-teal-800">
+              <i class="fas fa-layer-group mr-2"></i>Multi-Host ACL Configuration Principles
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-teal-700 mb-2">Rule Order Importance</h4>
+                <ul class="space-y-1 text-teal-600">
+                  <li>• Specific deny statements first</li>
+                  <li>• General permit statements last</li>
+                  <li>• Implicit deny all at end</li>
+                  <li>• First match wins evaluation</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-teal-700 mb-2">Host Specification</h4>
+                <ul class="space-y-1 text-teal-600">
+                  <li>• Use 'host' keyword for single IP</li>
+                  <li>• No wildcard mask needed for hosts</li>
+                  <li>• Precise targeting of devices</li>
+                  <li>• Avoids unintended matches</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.6.5: Configure IP ACLs to Mitigate Attacks -->
+      <section id="attack-mitigation" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.6.5: Configure IP ACLs to Mitigate Attacks</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on using ACLs as a security tool to mitigate common network attacks. The configuration includes both standard and extended ACLs designed to block malicious traffic patterns and protect network infrastructure.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Common Attack Mitigation ACLs -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-shield-alt mr-2"></i>Common Attack Mitigation ACLs
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Block RFC 1918 Private Addresses (Inbound)</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 101 deny ip 10.0.0.0 0.255.255.255 any
+access-list 101 deny ip 172.16.0.0 0.15.255.255 any
+access-list 101 deny ip 192.168.0.0 0.0.255.255 any
+access-list 101 permit ip any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Prevents private address spoofing from external networks</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Block Reserved/Loopback Addresses</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 102 deny ip 127.0.0.0 0.255.255.255 any
+access-list 102 deny ip 0.0.0.0 255.255.255.255 any
+access-list 102 permit ip any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Blocks loopback and 0.0.0.0 source addresses</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Block Fragmented Packets</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 120 deny ip any any fragments
+access-list 120 permit ip any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Prevents fragmentation attacks and reconnaissance</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Block Common Service Attacks</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 130 deny tcp any any eq 135
+access-list 130 deny tcp any any eq 139
+access-list 130 deny tcp any any eq 445
+access-list 130 permit ip any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Blocks Windows RPC, NetBIOS, and SMB ports</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ICMP Attack Mitigation -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>ICMP Attack Mitigation
+              </h3>
+              <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Rate Limit ICMP Echo Requests</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip access-list extended ICMP_LIMIT
+ permit icmp any any echo
+ permit icmp any any echo-reply
+ deny icmp any any
+
+interface [interface_id]
+ ip access-group ICMP_LIMIT in
+ rate-limit input access-group ICMP_LIMIT 8000 1500 2000 conform-action transmit exceed-action drop</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Limits ICMP echo requests to prevent ping floods while allowing normal operation</p>
+              </div>
+            </div>
+
+            <!-- TCP SYN Attack Protection -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-lock mr-2"></i>TCP SYN Attack Protection
+              </h3>
+              <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                <h4 class="font-semibold text-gray-800 mb-2">TCP Intercept Configuration</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip tcp intercept list 140
+access-list 140 permit tcp any host [protected_server_ip] eq 80
+ip tcp intercept mode intercept
+ip tcp intercept max-incomplete high 500
+ip tcp intercept max-incomplete low 400
+ip tcp intercept drop-mode random</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Protects against TCP SYN floods by intercepting and validating connections</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-yellow-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-yellow-800">
+              <i class="fas fa-exclamation-triangle mr-2"></i>ACL Attack Mitigation Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Ingress Filtering</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Block RFC 1918 addresses from outside</li>
+                  <li>• Block reserved and multicast addresses</li>
+                  <li>• Implement BCP 38 (anti-spoofing)</li>
+                  <li>• Filter unnecessary services</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">DoS/DDoS Protection</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Rate limit ICMP and SYN packets</li>
+                  <li>• Block known attack vectors</li>
+                  <li>• Use TCP intercept features</li>
+                  <li>• Monitor ACL hit counts</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.7.4: IPv6 ACLs -->
+      <section id="ipv6-acls" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.7.4: Configure IPv6 ACLs</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the configuration of IPv6 access control lists, which are essential for securing modern networks. IPv6 ACLs share similar concepts with IPv4 but have different syntax and address formats.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Basic IPv6 ACL Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-globe mr-2"></i>Basic IPv6 ACL Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Create IPv6 ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ipv6 access-list BLOCK_IPV6_PRIVACY
+ deny ipv6 2001:db8:acad::/48 any
+ permit ipv6 any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates IPv6 ACL to block specific IPv6 prefix while allowing all other traffic</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply IPv6 ACL to Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface [interface_id]
+ ipv6 traffic-filter BLOCK_IPV6_PRIVACY in</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies IPv6 ACL inbound on specified interface</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- IPv6 Extended ACL Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-shield-alt mr-2"></i>IPv6 Extended ACL Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Service-Specific Filtering</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ipv6 access-list IPV6_SERVICES
+ permit tcp 2001:db8:acad:10::/64 host 2001:db8:acad:30::10 eq www
+ permit tcp 2001:db8:acad:10::/64 host 2001:db8:acad:30::10 eq 443
+ permit icmp 2001:db8:acad:10::/64 host 2001:db8:acad:30::10
+ deny ipv6 any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows HTTP, HTTPS, and ICMP while denying all other IPv6 traffic</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">IPv6 Neighbor Discovery Protection</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ipv6 access-list ND_PROTECTION
+ permit icmp any any nd-na
+ permit icmp any any nd-ns
+ deny ipv6 any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows Neighbor Discovery while blocking other IPv6 traffic</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- IPv6 ACL Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>IPv6 ACL Verification Commands
+              </h3>
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show IPv6 ACLs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ipv6 access-list</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays all configured IPv6 ACLs and their hit counts</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface IPv6 ACLs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ipv6 interface [interface_id]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows IPv6 ACLs applied to specific interface</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">IPv6 Traffic Statistics</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ipv6 traffic</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays IPv6 traffic statistics including ACL drops</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-info-circle mr-2"></i>IPv6 ACL Key Differences from IPv4
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Address Format</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• IPv6 addresses in hexadecimal</li>
+                  <li>• Prefix notation (/64, /48 etc.)</li>
+                  <li>• No wildcard masks - use prefix lengths</li>
+                  <li>• 'any' keyword same as IPv4</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Protocol Considerations</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• ICMPv6 essential for IPv6 operation</li>
+                  <li>• Neighbor Discovery (ND) protocol</li>
+                  <li>• Stateless Address Autoconfiguration</li>
+                  <li>• IPv6 extension headers</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 9.2.4: Identify Packet Flow -->
+      <section id="packet-flow" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 9.2.4: Identify Packet Flow</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on analyzing and understanding packet flow through network devices with various security configurations. The command reference includes tools for tracking packet paths and identifying processing points.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Packet Tracing Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-route mr-2"></i>Packet Tracing and Flow Analysis
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Cisco IOS Packet Tracer</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>packet-tracer input [interface] [protocol] [source_ip] [source_port] [dest_ip] [dest_port] [detail]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Simulates packet flow through device with security policies</p>
+                  <div class="mt-2 bg-gray-100 p-2 rounded text-xs">
+                    <strong>Example:</strong> packet-tracer input inside tcp 192.168.1.10 12345 8.8.8.8 80 detail
+                  </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Debug IP Packet</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>debug ip packet [access-list-number] [detail]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays information about IP packets received, generated, or forwarded</p>
+                  <div class="mt-2 bg-gray-100 p-2 rounded text-xs">
+                    <strong>Example:</strong> debug ip packet 100 detail
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Flow Export Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip flow-export destination [collector_ip] [port]
+ip flow-export version 9
+interface [interface_id]
+ ip flow ingress
+ ip flow egress</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures NetFlow for detailed traffic analysis</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">ACL Flow Monitoring</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip access-list flow log-timer 60
+access-list 150 permit tcp any any log
+access-list 150 deny ip any any log</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables logging for ACL matches to track packet flow</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interface-Level Flow Analysis -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>Interface-Level Flow Analysis
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface Statistics</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show interface [interface_id]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays interface statistics including input/output rates and errors</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Policy Map Statistics</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show policy-map interface [interface_id]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows QoS policy statistics and packet classification</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NAT Translations</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip nat translations</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays active NAT translations and packet counts</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Security Policy Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-search mr-2"></i>Security Policy Verification
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">ACL Hit Counts</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show access-lists</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays ACL entries with match counts to verify policy enforcement</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Connection Tracking</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip inspect sessions</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows CBAC inspection sessions and connection states</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-route mr-2"></i>Packet Flow Analysis Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Analysis Tools</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Use packet tracer for simulation</li>
+                  <li>• Enable debug for real-time analysis</li>
+                  <li>• Configure flow monitoring for trends</li>
+                  <li>• Use ACL logging for specific flows</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Verification Steps</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Check interface counters</li>
+                  <li>• Verify ACL hit counts</li>
+                  <li>• Monitor NAT translations</li>
+                  <li>• Validate QoS policies</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 10.3.11: Configure a ZPF -->
+      <section id="zone-based-firewall" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 10.3.11: Configure a Zone-Based Policy Firewall (ZPF)</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the configuration of Zone-Based Policy Firewall (ZPF) on Cisco routers, providing stateful inspection firewall capabilities through security zones and zone pairs with associated policies.
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl mb-8">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-gray-800">ZPF Security Zones Concept</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                A["Outside Zone
+                <br />Untrusted"] -->|"Zone Pair Policy"| B["ZPF Router"]
+                B -->|"Zone Pair Policy"| C["Inside Zone
+                <br />Trusted"]
+                B -->|"Zone Pair Policy"| D["DMZ Zone
+                <br />Semi-Trusted"]
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Zone Creation and Interface Assignment -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-layer-group mr-2"></i>Zone Creation and Interface Assignment
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Define Security Zones</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>zone security INSIDE
+zone security OUTSIDE
+zone security DMZ</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates three security zones with different trust levels</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Assign Interfaces to Zones</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface GigabitEthernet0/0
+ zone-member security INSIDE
+
+interface GigabitEthernet0/1
+ zone-member security OUTSIDE
+
+interface GigabitEthernet0/2
+ zone-member security DMZ</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Assigns physical interfaces to appropriate security zones</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Class Maps for Traffic Classification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-filter mr-2"></i>Class Maps for Traffic Classification
+              </h3>
+
+              <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">HTTP/HTTPS Traffic Class</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map type inspect match-all WEB_TRAFFIC
+ match protocol http
+ match protocol https</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Matches both HTTP and HTTPS protocols for inspection</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">FTP Traffic Class</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map type inspect match-all FTP_TRAFFIC
+ match protocol ftp</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Matches FTP protocol for inspection</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">ICMP Traffic Class</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map type inspect match-all ICMP_TRAFFIC
+ match protocol icmp</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Matches ICMP protocol for inspection</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Policy Maps for Actions -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-cogs mr-2"></i>Policy Maps for Actions
+              </h3>
+
+              <div class="space-y-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inside-to-Outside Policy</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>policy-map type inspect INSIDE_TO_OUTSIDE_POLICY
+ class class-default
+  inspect</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Stateful inspection for all traffic from inside to outside</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside-to-DMZ Policy</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>policy-map type inspect OUTSIDE_TO_DMZ_POLICY
+ class WEB_TRAFFIC
+  inspect
+ class FTP_TRAFFIC
+  inspect
+ class class-default
+  drop</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Only allows inspected HTTP/HTTPS and FTP to DMZ, drops all else</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside-to-Inside Policy</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>policy-map type inspect OUTSIDE_TO_INSIDE_POLICY
+ class ICMP_TRAFFIC
+  inspect
+ class class-default
+  drop</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Only allows inspected ICMP from outside to inside</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Zone Pairs Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-exchange-alt mr-2"></i>Zone Pairs Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inside to Outside</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>zone-pair security INSIDE-OUTSIDE source INSIDE destination OUTSIDE
+ service-policy type inspect INSIDE_TO_OUTSIDE_POLICY</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies policy for traffic from inside to outside zone</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside to DMZ</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>zone-pair security OUTSIDE-DMZ source OUTSIDE destination DMZ
+ service-policy type inspect OUTSIDE_TO_DMZ_POLICY</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies policy for traffic from outside to DMZ zone</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside to Inside</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>zone-pair security OUTSIDE-INSIDE source OUTSIDE destination INSIDE
+ service-policy type inspect OUTSIDE_TO_INSIDE_POLICY</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies policy for traffic from outside to inside zone</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-green-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-green-800">
+              <i class="fas fa-shield-alt mr-2"></i>ZPF Security Principles
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Zone-Based Architecture</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Interfaces assigned to zones</li>
+                  <li>• Policies defined between zones</li>
+                  <li>• Default deny between zones</li>
+                  <li>• Intra-zone traffic allowed by default</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Stateful Inspection</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Tracks connection states</li>
+                  <li>• Allows return traffic automatically</li>
+                  <li>• Protocol-aware inspection</li>
+                  <li>• Application layer filtering</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 11.4.6: Implement a Local SPAN -->
+      <section id="span" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 11.4.6: Implement a Local SPAN</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the configuration of Local Switched Port Analyzer (SPAN) to monitor network traffic for troubleshooting, security analysis, and compliance monitoring by copying packets from source ports to a destination monitoring port.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Basic SPAN Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-eye mr-2"></i>Local SPAN Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Configure SPAN Session</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>monitor session 1 source interface fastEthernet 0/1 both
+monitor session 1 destination interface fastEthernet 0/24</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Monitors both ingress and egress traffic on Fa0/1 and copies to Fa0/24</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Multiple Source Ports</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>monitor session 1 source interface fastEthernet 0/1 - 3 both
+monitor session 1 source interface fastEthernet 0/5 both
+monitor session 1 destination interface fastEthernet 0/24</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Monitors multiple source ports (1-3 and 5) and copies to single destination</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Advanced SPAN Features -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-cogs mr-2"></i>Advanced SPAN Features
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VLAN-Based SPAN</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>monitor session 2 source vlan 10 both
+monitor session 2 destination interface fastEthernet 0/24</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Monitors all traffic on VLAN 10 instead of specific ports</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Encapsulation Options</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>monitor session 1 destination interface fastEthernet 0/24 encapsulation replicate</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Preserves original VLAN tags and encapsulation on mirrored packets</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Ingress Filtering</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>monitor session 1 filter packet-type good</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Filters monitored traffic to capture only specific packet types</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Session Removal</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>no monitor session 1</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Removes the SPAN configuration for session 1</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- SPAN Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>SPAN Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show SPAN Sessions</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show monitor</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays all configured SPAN sessions and their status</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Detailed Session Info</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show monitor session 1</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows detailed information about specific SPAN session</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface Monitoring Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show interfaces status</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows interface status including monitoring configuration</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-orange-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-orange-800">
+              <i class="fas fa-eye mr-2"></i>SPAN Configuration Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-orange-700 mb-2">Performance Considerations</h4>
+                <ul class="space-y-1 text-orange-600">
+                  <li>• Monitor only necessary traffic</li>
+                  <li>• Use 'both' direction sparingly</li>
+                  <li>• Consider impact on switch CPU</li>
+                  <li>• Use dedicated monitoring interfaces</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-orange-700 mb-2">Security Considerations</h4>
+                <ul class="space-y-1 text-orange-600">
+                  <li>• Secure monitoring station access</li>
+                  <li>• Encrypt sensitive captured data</li>
+                  <li>• Limit who can configure SPAN</li>
+                  <li>• Monitor for unauthorized SPAN sessions</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 14.3.11: Port Security -->
+      <section id="port-security" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 14.3.11: Port Security</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on implementing port security on Cisco switches to prevent unauthorized devices from connecting to switch ports. Port security limits the number of MAC addresses per port and can take action when violations occur.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Basic Port Security Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-lock mr-2"></i>Basic Port Security Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Enable Port Security</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ switchport mode access
+ switchport port-security
+ switchport port-security maximum 2
+ switchport port-security violation restrict</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables port security with maximum 2 MAC addresses and restrict violation mode</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Static MAC Assignment</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ switchport port-security mac-address 0000.1111.2222
+ switchport port-security mac-address sticky</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures static MAC and enables sticky learning for dynamic MACs</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Port Security Violation Modes -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-exclamation-triangle mr-2"></i>Port Security Violation Modes
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Protect Mode</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>switchport port-security violation protect</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Drops packets from unknown MACs but doesn't log violation</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Restrict Mode</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>switchport port-security violation restrict</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Drops packets and sends SNMP trap, increments violation counter</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Shutdown Mode</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>switchport port-security violation shutdown</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Puts port in error-disabled state, requires manual intervention</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Port Security Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>Port Security Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show Port Security</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show port-security</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays global port security status and configuration</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface Details</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show port-security interface fastEthernet 0/1</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows detailed port security info for specific interface</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">MAC Address Table</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show port-security address</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays secure MAC addresses and aging information</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-red-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-red-800">
+              <i class="fas fa-shield-alt mr-2"></i>Port Security Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-red-700 mb-2">Configuration Guidelines</h4>
+                <ul class="space-y-1 text-red-600">
+                  <li>• Set appropriate maximum MAC addresses</li>
+                  <li>• Use sticky learning for dynamic MACs</li>
+                  <li>• Configure violation mode based on risk</li>
+                  <li>• Document static MAC assignments</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-red-700 mb-2">Monitoring and Maintenance</h4>
+                <ul class="space-y-1 text-red-600">
+                  <li>• Regularly check violation counts</li>
+                  <li>• Monitor port status for err-disabled</li>
+                  <li>• Review MAC address table changes</li>
+                  <li>• Test security with unauthorized devices</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 14.8.10: Investigate STP Loop Prevention -->
+      <section id="stp-loop" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 14.8.10: Investigate STP Loop Prevention</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers Spanning Tree Protocol (STP) loop prevention mechanisms and commands to investigate and verify STP operation. STP prevents broadcast storms and network loops in redundant switch topologies.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- STP Verification Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-project-diagram mr-2"></i>STP Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">STP Summary Information</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree summary</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays STP summary including root bridge, blocked ports, and protocol information</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Detailed STP Information</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree detail</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows detailed STP information for all VLANs and interfaces</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface-Specific STP</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree interface fastEthernet 0/1</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays STP information for specific interface including role and state</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VLAN-Specific STP</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree vlan 10</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows STP information for specific VLAN including topology changes</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- STP Loop Prevention Features -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-sync-alt mr-2"></i>STP Loop Prevention Features
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">BPDU Guard Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>spanning-tree portfast bpduguard default
+interface fastEthernet 0/1
+ spanning-tree bpduguard enable</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Disables port if BPDU is received on PortFast-enabled port</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Root Guard Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ spanning-tree guard root</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Prevents superior BPDUs from changing root bridge election</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Loop Guard Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>spanning-tree loopguard default</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Prevents alternative or root ports from becoming designated ports</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">UDLD Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>udld enable
+interface fastEthernet 0/1
+ udld port aggressive</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Detects unidirectional links that could cause STP loops</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- STP Troubleshooting Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-wrench mr-2"></i>STP Troubleshooting Commands
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Debug STP Events</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>debug spanning-tree events</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays real-time STP events including topology changes</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Debug STP BPDU</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>debug spanning-tree bpdu</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays BPDU transmission and reception details</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Clear STP Counters</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>clear spanning-tree counters</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Resets STP statistics and counters for fresh analysis</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-sync-alt mr-2"></i>STP Loop Prevention Checklist
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Prevention Features</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Enable BPDU Guard on access ports</li>
+                  <li>• Use Root Guard on uplinks</li>
+                  <li>• Configure PortFast for end devices</li>
+                  <li>• Enable Loop Guard globally</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Monitoring Points</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Monitor topology change frequency</li>
+                  <li>• Check blocked port consistency</li>
+                  <li>• Verify root bridge stability</li>
+                  <li>• Track BPDU transmission rates</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 14.9.10: Implement STP Security -->
+      <section id="stp-security" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 14.9.10: Implement STP Security</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on implementing comprehensive STP security features to protect against various attacks and ensure network stability. The configuration includes root guard, BPDU guard, and other protective mechanisms.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Root Guard Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-shield-alt mr-2"></i>Root Guard Configuration
+              </h3>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Enable Root Guard on Interfaces</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface range fastEthernet 0/1 - 24
+ spanning-tree guard root</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Prevents superior BPDUs from changing root bridge election on all access ports</p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-green-500 mt-4">
+                <h4 class="font-semibold text-gray-800 mb-2">Root Guard Verification</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree inconsistentports</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Displays ports in inconsistent state due to root guard violations</p>
+              </div>
+            </div>
+
+            <!-- BPDU Guard Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-lock mr-2"></i>BPDU Guard Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Global BPDU Guard</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>spanning-tree portfast bpduguard default</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables BPDU guard on all PortFast-enabled ports globally</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface BPDU Guard</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ spanning-tree bpduguard enable</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables BPDU guard on specific interface</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500 mt-4">
+                <h4 class="font-semibold text-gray-800 mb-2">BPDU Guard Recovery</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>errdisable recovery cause bpduguard
+errdisable recovery interval 300</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Automatically recovers ports disabled by BPDU guard after 5 minutes</p>
+              </div>
+            </div>
+
+            <!-- BPDU Filter Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-filter mr-2"></i>BPDU Filter Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Global BPDU Filter</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>spanning-tree portfast bpdufilter default</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Filters BPDUs on all PortFast-enabled ports globally</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface BPDU Filter</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ spanning-tree bpdufilter enable</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Filters BPDUs on specific interface, use with caution</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- STP Security Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-search mr-2"></i>STP Security Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">STP Summary</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree summary</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows global STP configuration including security features</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inconsistent Ports</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show spanning-tree inconsistentports</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays ports in inconsistent state due to security violations</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Err-disabled Recovery</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show errdisable recovery</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows errdisable recovery status and timer settings</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-green-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-green-800">
+              <i class="fas fa-shield-alt mr-2"></i>STP Security Implementation Strategy
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Access Layer Protection</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Enable BPDU Guard on access ports</li>
+                  <li>• Use Root Guard on uplinks</li>
+                  <li>• Configure PortFast for end devices</li>
+                  <li>• Enable Loop Guard globally</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-green-700 mb-2">Distribution/Core Protection</h4>
+                <ul class="space-y-1 text-green-600">
+                  <li>• Use Root Guard on distribution links</li>
+                  <li>• Enable UDLD on fiber connections</li>
+                  <li>• Configure BPDU Filter carefully</li>
+                  <li>• Monitor for topology changes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 14.9.11: Layer 2 VLAN Security -->
+      <section id="vlan-security" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 14.9.11: Layer 2 VLAN Security</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab focuses on implementing comprehensive Layer 2 VLAN security measures to protect against VLAN hopping, unauthorized access, and other L2 attacks. The configuration includes VLAN access control, private VLANs, and other protective mechanisms.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- VLAN Access Control -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-key mr-2"></i>VLAN Access Control
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VLAN Access Maps</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>vlan access-map VLAN10_FILTER 10
+ match ip address 101
+ action drop
+vlan access-map VLAN10_FILTER 20
+ action forward
+
+vlan filter VLAN10_FILTER vlan-list 10</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates VLAN access map to filter traffic within VLAN 10 using ACL 101</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VACL Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 101 permit ip 192.168.10.0 0.0.0.255 any
+access-list 101 deny ip any any</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">ACL for VLAN access map - permits local subnet, denies all other IP</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Private VLAN Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-lock mr-2"></i>Private VLAN Configuration
+              </h3>
+
+              <div class="space-y-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Define Private VLANs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>vlan 100
+ private-vlan primary
+vlan 101
+ private-vlan isolated
+vlan 102
+ private-vlan community
+vlan 103
+ private-vlan community</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Defines primary, isolated, and community private VLANs</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Associate Private VLANs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>vlan 100
+ private-vlan association 101-103</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Associates secondary VLANs with primary VLAN</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Configure Private VLAN Interfaces</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface fastEthernet 0/1
+ switchport mode private-vlan host
+ switchport private-vlan host-association 100 101
+
+interface fastEthernet 0/2
+ switchport mode private-vlan host
+ switchport private-vlan host-association 100 102
+
+interface fastEthernet 0/24
+ switchport mode private-vlan promiscuous
+ switchport private-vlan mapping 100 101-103</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures host ports in isolated/community VLANs and promiscuous uplink port</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- VLAN Security Features -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-shield-alt mr-2"></i>VLAN Security Features
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VLAN Hopping Prevention</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface range fastEthernet 0/1 - 24
+ switchport mode access
+ switchport nonegotiate</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Disables DTP and sets access mode to prevent VLAN hopping attacks</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Native VLAN Security</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>vlan dot1q tag native
+interface range fastEthernet 0/1 - 24
+ switchport trunk native vlan 999</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Tags native VLAN and assigns unused VLAN as native for security</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500 mt-4">
+                <h4 class="font-semibold text-gray-800 mb-2">DHCP Snooping Configuration</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>ip dhcp snooping
+ip dhcp snooping vlan 10,20,30
+interface fastEthernet 0/24
+ ip dhcp snooping trust
+interface range fastEthernet 0/1 - 23
+ ip dhcp snooping limit rate 10</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Enables DHCP snooping to prevent rogue DHCP servers and rate limits DHCP requests</p>
+              </div>
+            </div>
+
+            <!-- VLAN Security Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>VLAN Security Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Private VLAN Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show vlan private-vlan</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays private VLAN configuration and associations</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">DHCP Snooping Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip dhcp snooping</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows DHCP snooping configuration and binding table</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">VLAN Access Maps</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show vlan access-map</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays configured VLAN access maps and their applications</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-purple-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-purple-800">
+              <i class="fas fa-layer-group mr-2"></i>Layer 2 VLAN Security Best Practices
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-purple-700 mb-2">Access Control</h4>
+                <ul class="space-y-1 text-purple-600">
+                  <li>• Implement VLAN access maps</li>
+                  <li>• Use private VLANs for isolation</li>
+                  <li>• Configure port security</li>
+                  <li>• Enable DHCP snooping</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-purple-700 mb-2">Attack Prevention</h4>
+                <ul class="space-y-1 text-purple-600">
+                  <li>• Prevent VLAN hopping attacks</li>
+                  <li>• Secure native VLAN</li>
+                  <li>• Implement STP security</li>
+                  <li>• Monitor for rogue devices</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 19.5.5: Configure and Verify a Site-to-Site IPsec VPN -->
+      <section id="ipsec-vpn" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 19.5.5: Configure and Verify a Site-to-Site IPsec VPN</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the configuration of a site-to-site IPsec VPN tunnel between two Cisco routers. IPsec VPN provides secure encrypted communication over public networks, ensuring data confidentiality, integrity, and authenticity.
+            </p>
+          </div>
+
+          <div class="bg-gray-50 p-6 rounded-xl mb-8">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-gray-800">Site-to-Site VPN Topology</h3>
+            <div class="mermaid-container">
+              <div class="mermaid-controls">
+                <button class="mermaid-control-btn zoom-in" title="放大">
+                  <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="mermaid-control-btn zoom-out" title="缩小">
+                  <i class="fas fa-search-minus"></i>
+                </button>
+                <button class="mermaid-control-btn reset-zoom" title="重置">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </button>
+                <button class="mermaid-control-btn fullscreen" title="全屏查看">
+                  <i class="fas fa-expand"></i>
+                </button>
+              </div>
+              <div class="mermaid">
+                graph LR
+                A["Site A
+                <br />192.168.10.0/24"] --> B["Router A
+                <br />209.165.200.225"]
+                B -->|"IPsec Tunnel"| C["Router B
+                <br />209.165.202.129"]
+                C --> D["Site B
+                <br />192.168.20.0/24"]
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- ISAKMP Policy Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-key mr-2"></i>ISAKMP (IKE) Policy Configuration
+              </h3>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Create ISAKMP Policy (Both Routers)</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto isakmp policy 10
+ encryption aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+ lifetime 86400</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Defines IKE Phase 1 policy with AES-256 encryption, SHA-256 hashing, and pre-shared key authentication</p>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-green-500 mt-4">
+                <h4 class="font-semibold text-gray-800 mb-2">Pre-shared Key Configuration</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto isakmp key VPNpa55 address 209.165.202.129</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Configures pre-shared key for remote peer (Router A configuration shown)</p>
+              </div>
+            </div>
+
+            <!-- IPsec Transform Set Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-shield-alt mr-2"></i>IPsec Transform Set Configuration
+              </h3>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Create Transform Set (Both Routers)</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto ipsec transform-set ESP_AES_SHA esp-aes 256 esp-sha256-hmac</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Defines IPsec transform set with AES-256 encryption and SHA-256 HMAC authentication</p>
+              </div>
+            </div>
+
+            <!-- ACL for Interesting Traffic -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-list-alt mr-2"></i>ACL for Interesting Traffic
+              </h3>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Define Interesting Traffic (Both Routers)</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 101 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255</code></pre>
+                <p class="text-sm text-gray-600 mt-2">ACL defines traffic to be encrypted - from Site A to Site B networks</p>
+              </div>
+            </div>
+
+            <!-- Crypto Map Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-map mr-2"></i>Crypto Map Configuration
+              </h3>
+
+              <div class="space-y-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Create Crypto Map (Router A)</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto map VPN_MAP 10 ipsec-isakmp
+ set peer 209.165.202.129
+ set transform-set ESP_AES_SHA
+ set pfs group14
+ match address 101</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates crypto map for IPsec tunnel with peer, transform set, and traffic selector</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Apply Crypto Map to Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface serial 0/0/0
+ crypto map VPN_MAP</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Applies crypto map to WAN interface to enable IPsec tunnel</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- IPsec Verification Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-double mr-2"></i>IPsec Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">ISAKMP SA Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show crypto isakmp sa</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays IKE Phase 1 Security Associations status</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">IPsec SA Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show crypto ipsec sa
+show crypto ipsec sa peer 209.165.202.129</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays IPsec Security Associations and traffic statistics</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Crypto Map Information</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show crypto map</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows configured crypto maps and their applications</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Debug IPsec</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>debug crypto isakmp
+debug crypto ipsec</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables debugging for IKE and IPsec negotiation and traffic</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-blue-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-blue-800">
+              <i class="fas fa-key mr-2"></i>IPsec Security Checklist
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Phase 1 (IKE) Requirements</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Matching ISAKMP policies</li>
+                  <li>• Correct pre-shared keys</li>
+                  <li>• Reachable peer addresses</li>
+                  <li>• Compatible encryption/hashing</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-blue-700 mb-2">Phase 2 (IPsec) Requirements</h4>
+                <ul class="space-y-1 text-blue-600">
+                  <li>• Matching transform sets</li>
+                  <li>• Correct ACL for traffic</li>
+                  <li>• Compatible crypto maps</li>
+                  <li>• Proper interface application</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 21.7.5: Configure ASA Basic Settings and Firewall -->
+      <section id="asa-firewall" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 21.7.5: Configure ASA Basic Settings and Firewall Using the CLI</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab covers the basic configuration of Cisco ASA firewall using the command-line interface. The configuration includes initial setup, interface configuration, security levels, NAT, and basic firewall policies.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Initial ASA Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-terminal mr-2"></i>Initial ASA Configuration
+              </h3>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Basic Setup Commands</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>hostname ASA-01
+domain-name example.com
+enable password [secure_password]
+username admin password [secure_password] privilege 15
+
+interface management 0/0
+ nameif management
+ security-level 100
+ ip address 192.168.1.1 255.255.255.0</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Sets hostname, domain, passwords, and management interface configuration</p>
+              </div>
+            </div>
+
+            <!-- Interface Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-network-wired mr-2"></i>ASA Interface Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inside Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface gigabitEtherNet 0/0
+ nameif inside
+ security-level 100
+ ip address 10.1.1.1 255.255.255.0
+ no shutdown</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures inside interface with high security level (100)</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface gigabitEtherNet 0/1
+ nameif outside
+ security-level 0
+ ip address 209.165.200.225 255.255.255.224
+ no shutdown</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures outside interface with low security level (0)</p>
+                </div>
+              </div>
+
+              <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500 mt-4">
+                <h4 class="font-semibold text-gray-800 mb-2">DMZ Interface</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface gigabitEtherNet 0/2
+ nameif dmz
+ security-level 50
+ ip address 172.16.1.1 255.255.255.0
+ no shutdown</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Configures DMZ interface with medium security level (50)</p>
+              </div>
+            </div>
+
+            <!-- NAT Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-exchange-alt mr-2"></i>ASA NAT Configuration
+              </h3>
+
+              <div class="space-y-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Dynamic PAT (Many-to-One)</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>object network INSIDE_NET
+ subnet 10.1.1.0 255.255.255.0
+nat (inside,outside) dynamic interface</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures dynamic PAT for inside network using outside interface IP</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Static NAT (One-to-One)</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>object network DMZ_SERVER
+ host 172.16.1.10
+nat (dmz,outside) static 209.165.200.226</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures static NAT for DMZ server with public IP</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Identity NAT (No NAT)</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>nat (inside,dmz) source static INSIDE_NET INSIDE_NET</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Disables NAT between inside and DMZ for direct communication</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Access Control Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-filter mr-2"></i>Access Control Configuration
+              </h3>
+
+              <div class="space-y-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Outside Access Rules</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list OUTSIDE_IN extended permit tcp any object DMZ_SERVER eq www
+access-list OUTSIDE_IN extended permit tcp any object DMZ_SERVER eq https
+access-list OUTSIDE_IN extended deny ip any any
+
+access-group OUTSIDE_IN in interface outside</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows HTTP/HTTPS to DMZ server, denies all other traffic from outside</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inside Access Rules</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list INSIDE_OUT extended permit ip object INSIDE_NET any
+access-list INSIDE_OUT extended deny ip any any
+
+access-group INSIDE_OUT in interface inside</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Allows inside network to access any destination, denies rest</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ASA Service Configuration -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-cogs mr-2"></i>ASA Service Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">DHCP Service</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>dhcpd address 10.1.1.100-10.1.1.200 inside
+dhcpd dns 8.8.8.8 8.8.4.4 interface inside
+dhcpd enable inside</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Configures DHCP server for inside network</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Inspection Policies</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map inspection_default
+ match default-inspection-traffic
+
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+
+policy-map global_policy
+ class inspection_default
+  inspect ftp
+  inspect http
+  inspect dns preset_dns_map
+  inspect icmp
+
+service-policy global_policy global</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables application layer inspection for common protocols</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ASA Verification Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-double mr-2"></i>ASA Verification Commands
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface Status</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show interface ip brief
+show interface [interface_id]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows interface status and IP configuration</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">NAT Information</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show nat
+show xlate</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays NAT configuration and translation table</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Access Lists</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show access-list
+show access-group</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows access list entries and interface applications</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Connection Information</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show conn
+show service-policy</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows active connections and service policy statistics</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-teal-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-teal-800">
+              <i class="fas fa-fire mr-2"></i>ASA Firewall Implementation Strategy
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-teal-700 mb-2">Initial Setup</h4>
+                <ul class="space-y-1 text-teal-600">
+                  <li>• Configure hostname and domain</li>
+                  <li>• Set strong passwords</li>
+                  <li>• Configure management interface</li>
+                  <li>• Enable local AAA authentication</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-teal-700 mb-2">Security Implementation</h4>
+                <ul class="space-y-1 text-teal-600">
+                  <li>• Configure security zones/levels</li>
+                  <li>• Implement NAT policies</li>
+                  <li>• Create access control rules</li>
+                  <li>• Enable application inspection</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <div class="grid md:grid-cols-3 gap-8">
+            <div>
+              <h3 class="font-crimson text-xl font-semibold mb-4">Complete Lab Command Reference</h3>
+              <p class="text-gray-400 text-sm">
+                Comprehensive collection of essential commands for Cisco Network Security 1.0 course labs, covering routers, switches, and firewalls.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Key Topics</h4>
+              <ul class="space-y-2 text-sm text-gray-400">
+                <li>• Secure Passwords & SSH</li>
+                <li>• OSPF Authentication</li>
+                <li>• NTP Configuration</li>
+                <li>• Local & Server AAA</li>
+                <li>• Various ACL Types</li>
+                <li>• VPN Configuration</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-4">Reference</h4>
+              <p class="text-sm text-gray-400">
+                Based on Cisco Networking Academy's Network Security 1.0 course labs.
+                <a href="https://itexamanswers.net/network-security-exam-answers-version-1-0-full-labs.html" class="text-teal-400 hover:text-teal-300" target="_blank">
+                  View Original Source
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Cisco Network Security Command Reference. For educational purposes.</p>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+  </body>
+
+</html>
