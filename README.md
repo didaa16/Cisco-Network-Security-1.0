@@ -300,7 +300,7 @@ This project is licensed under the MIT License - free to use for educational pur
 
 <div align="center">
 
-### 🚀 [**Access the Live Guide**](https://yourusername.github.io/cisco-network-security-labs/)
+### 🚀 [**Access the Live Guide**](https://didaa16.github.io/cisco-network-security-labs/)
 
 **⭐ Star this repository if you find it helpful!**
 
