@@ -21,7 +21,7 @@
     </button>
   <div class="layout">
     <!-- Fixed Table of Contents - Hidden on mobile by default -->
-    <nav id="toc-nav" class="toc-fixed rounded-xl shadow-xl lg:block hidden">
+    <nav id="toc-nav" class="toc-fixed rounded-xl shadow-xl">
       <div class="p-6">
         <h3 class="font-crimson text-lg font-semibold text-gray-800 mb-4">Contents</h3>
         <ul class="space-y-2 text-sm">
@@ -45,6 +45,9 @@
           </li>
           <li>
             <a href="#server-aaa" class="citation-link">Lab 7.4.9: Server-based AAA</a>
+          </li>
+          <li>
+            <a href="#acl-demonstration" class="citation-link">Lab 8.1.5: ACL Demonstration</a>
           </li>
           <li>
             <a href="#named-acls" class="citation-link">Lab 8.5.5: Named IPv4 ACLs</a>
@@ -597,11 +600,10 @@ ntp server 192.168.1.5 key 1</code></pre>
               </h3>
               <div class="grid md:grid-cols-2 gap-6">
                 <div class="bg-gray-100 p-4 rounded-lg">
-                  <h4 class="font-semibold text-gray-800 mb-2">SSH Version and Timeout</h4>
+                  <h4 class="font-semibold text-gray-800 mb-2">SSH Version and Login Block</h4>
                   <pre class="text-sm overflow-x-auto"><code>ip ssh version 2
-ip ssh authentication-retries 2
-ip ssh time-out 90</code></pre>
-                  <p class="text-sm text-gray-600 mt-2">Enforces SSHv2 and sets security parameters</p>
+login block-for 600 attempts 4 within 120</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Blocks login for 10 minutes after 4 failed attempts within 2 minutes</p>
                 </div>
                 <div class="bg-gray-100 p-4 rounded-lg">
                   <h4 class="font-semibold text-gray-800 mb-2">User and Domain Configuration</h4>
@@ -788,7 +790,8 @@ crypto key generate rsa general-keys modulus 1024</code></pre>
                 <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
                   <h4 class="font-semibold text-gray-800 mb-2">Enable AAA and Configure Server</h4>
                   <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa new-model
-tacacs-server host 10.1.1.100 key Network@123</code></pre>
+tacacs-server host 192.168.2.2
+tacacs-server key tacacspa55</code></pre>
                   <p class="text-sm text-gray-600 mt-2">Activates AAA and specifies TACACS+ server with shared secret</p>
                 </div>
 
@@ -817,7 +820,8 @@ tacacs-server host 10.1.1.100 key Network@123</code></pre>
                 <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
                   <h4 class="font-semibold text-gray-800 mb-2">Enable AAA and Configure Server</h4>
                   <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>aaa new-model
-radius-server host 10.1.1.101 key Radius@123</code></pre>
+radius-server host 192.168.3.2
+radius-server key radiuspa55</code></pre>
                   <p class="text-sm text-gray-600 mt-2">Activates AAA and specifies RADIUS server with shared secret</p>
                 </div>
 
@@ -860,6 +864,155 @@ radius-server host 10.1.1.101 key Radius@123</code></pre>
                   <li>• Combines authentication and authorization</li>
                   <li>• UDP ports 1812, 1813</li>
                   <li>• Better for network access</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab 8.1.5: ACL Demonstration -->
+      <section id="acl-demonstration" class="py-16 bg-white">
+        <div class="container mx-auto px-8 max-w-6xl">
+          <h2 class="font-crimson text-4xl font-bold text-gray-800 mb-8">Lab 8.1.5: ACL Demonstration</h2>
+
+          <div class="mb-8">
+            <p class="text-lg text-gray-600 mb-6">
+              This lab demonstrates the fundamentals of Access Control Lists (ACLs) including how to view, verify, and remove ACLs. Understanding these basic ACL operations is essential before implementing more complex access control policies.
+            </p>
+          </div>
+
+          <div class="grid gap-8">
+            <!-- Viewing ACLs -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-eye mr-2"></i>Viewing ACL Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show All ACLs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show access-lists</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays all configured ACLs with their entries and match statistics</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show Specific ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show access-lists [number or name]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays details of a specific ACL by number or name</p>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-6 mt-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show Interface ACLs</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip interface [interface]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows which ACLs are applied to a specific interface</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Show Running Config</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show running-config | include access-list
+      show run | section access-list</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Displays ACL configuration from running configuration</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Removing ACLs -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-trash-alt mr-2"></i>Removing ACL Configuration
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Remove ACL from Interface</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>interface [interface_id]
+      no ip access-group [number] [in|out]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Removes ACL application from interface without deleting the ACL itself</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Delete Entire ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>no access-list [number]
+      no ip access-list [standard|extended] [name]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Completely deletes the ACL from configuration</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACL Application Verification -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-check-circle mr-2"></i>ACL Application Verification
+              </h3>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-teal-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Interface Brief</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip interface brief</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Quick overview of all interface status</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Detailed Interface Info</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show ip interface [interface_id]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Shows ACL application and direction on interface</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-green-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Running Configuration</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>show run</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Complete running configuration including all ACLs</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACL Testing Commands -->
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-vial mr-2"></i>ACL Testing and Troubleshooting
+              </h3>
+
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Clear ACL Counters</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>clear access-list counters [number or name]</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Resets match counters for testing ACL effectiveness</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Debug ACL</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>debug ip packet [access-list]
+      undebug all</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Enables/disables debug for ACL packet processing</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 bg-yellow-50 p-6 rounded-xl">
+            <h3 class="font-crimson text-xl font-semibold mb-4 text-yellow-800">
+              <i class="fas fa-exclamation-triangle mr-2"></i>ACL Best Practices and Reminders
+            </h3>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Configuration Tips</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Always remove ACL from interface before deleting it</li>
+                  <li>• Use descriptive names for named ACLs</li>
+                  <li>• Test ACLs before applying to production interfaces</li>
+                  <li>• Document ACL purpose and creation date</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-yellow-700 mb-2">Verification Steps</h4>
+                <ul class="space-y-1 text-yellow-600">
+                  <li>• Check ACL match counters after applying</li>
+                  <li>• Verify ACL direction (in/out) on interface</li>
+                  <li>• Test with ping/telnet from source to destination</li>
+                  <li>• Review logs for denied traffic patterns</li>
                 </ul>
               </div>
             </div>
@@ -1356,6 +1509,14 @@ access-list 101 permit ip any any</code></pre>
                   <p class="text-sm text-gray-600 mt-2">Prevents private address spoofing from external networks</p>
                 </div>
 
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Restrict VTY Access</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 10 permit host 192.168.3.3
+                line vty 0 4
+                access-class 10 in</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Restricts VTY access to management PC only (uses access-class, not access-group)</p>
+                </div>
+
                 <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
                   <h4 class="font-semibold text-gray-800 mb-2">Block Reserved/Loopback Addresses</h4>
                   <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 102 deny ip 127.0.0.0 0.255.255.255 any
@@ -1773,6 +1934,18 @@ interface GigabitEthernet0/2
               </div>
             </div>
 
+            <div class="command-card p-6 rounded-xl">
+              <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
+                <i class="fas fa-list-alt mr-2"></i>Step 1: Create ACL for Interesting Traffic
+              </h3>
+              
+              <div class="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                <h4 class="font-semibold text-gray-800 mb-2">Define Interesting Traffic</h4>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 101 permit ip 192.168.3.0 0.0.0.255 any</code></pre>
+                <p class="text-sm text-gray-600 mt-2">Defines interesting traffic from internal network</p>
+              </div>
+            </div>
+
             <!-- Class Maps for Traffic Classification -->
             <div class="command-card p-6 rounded-xl">
               <h3 class="font-crimson text-2xl font-semibold mb-6 text-teal-700">
@@ -1780,6 +1953,13 @@ interface GigabitEthernet0/2
               </h3>
 
               <div class="space-y-4">
+                <div class="bg-white p-4 rounded-lg border-l-4 border-yellow-500">
+                  <h4 class="font-semibold text-gray-800 mb-2">Create Class Map</h4>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map type inspect match-all IN-NET-CLASS-MAP
+                match access-group 101</code></pre>
+                  <p class="text-sm text-gray-600 mt-2">Creates class map that matches traffic defined in ACL 101</p>
+                </div>
+
                 <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
                   <h4 class="font-semibold text-gray-800 mb-2">HTTP/HTTPS Traffic Class</h4>
                   <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>class-map type inspect match-all WEB_TRAFFIC
@@ -2685,7 +2865,7 @@ interface range fastEthernet 0/1 - 23
 
               <div class="bg-white p-4 rounded-lg border-l-4 border-orange-500">
                 <h4 class="font-semibold text-gray-800 mb-2">Create Transform Set (Both Routers)</h4>
-                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto ipsec transform-set ESP_AES_SHA esp-aes 256 esp-sha256-hmac</code></pre>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto ipsec transform-set VPN-SET esp-aes esp-sha-hmac</code></pre>
                 <p class="text-sm text-gray-600 mt-2">Defines IPsec transform set with AES-256 encryption and SHA-256 HMAC authentication</p>
               </div>
             </div>
@@ -2698,7 +2878,7 @@ interface range fastEthernet 0/1 - 23
 
               <div class="bg-white p-4 rounded-lg border-l-4 border-red-500">
                 <h4 class="font-semibold text-gray-800 mb-2">Define Interesting Traffic (Both Routers)</h4>
-                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 101 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255</code></pre>
+                <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>access-list 110 permit ip 192.168.1.0 0.0.0.255 192.168.3.0 0.0.0.255</code></pre>
                 <p class="text-sm text-gray-600 mt-2">ACL defines traffic to be encrypted - from Site A to Site B networks</p>
               </div>
             </div>
@@ -2712,11 +2892,11 @@ interface range fastEthernet 0/1 - 23
               <div class="space-y-6">
                 <div class="bg-white p-4 rounded-lg border-l-4 border-purple-500">
                   <h4 class="font-semibold text-gray-800 mb-2">Create Crypto Map (Router A)</h4>
-                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto map VPN_MAP 10 ipsec-isakmp
- set peer 209.165.202.129
- set transform-set ESP_AES_SHA
- set pfs group14
- match address 101</code></pre>
+                  <pre class="bg-gray-100 p-3 rounded text-sm overflow-x-auto"><code>crypto map VPN-MAP 10 ipsec-isakmp
+ description VPN connection to R3
+ set peer 10.2.2.2
+ set transform-set VPN-SET
+ match address 110</code></pre>
                   <p class="text-sm text-gray-600 mt-2">Creates crypto map for IPsec tunnel with peer, transform set, and traffic selector</p>
                 </div>
 
